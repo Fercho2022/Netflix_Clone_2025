@@ -1,0 +1,9 @@
+<app-header [userImg]="userProfileImg"/>
+<app-banner></app-banner>
+<div class="space-y-0 mt-12">
+<app-movie-carrousel [title]="'Popular movies'" [peliculas]="popularMovies"></app-movie-carrousel>
+<app-movie-carrousel [title]="'Top Rated Movies'" [peliculas]="topRatedMovies"></app-movie-carrousel>
+<app-movie-carrousel [title]="'Upcoming Movies'" [peliculas]="upcomingMovies"></app-movie-carrousel>
+<app-movie-carrousel [title]="'Now Playing Movies'" [peliculas]="nowPlayingMovies"></app-movie-carrousel>
+<app-movie-carrousel [title]="'Trending TV shows'" [peliculas]="tvShows"></app-movie-carrousel>
+</div>
