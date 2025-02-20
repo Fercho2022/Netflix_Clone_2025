@@ -5,6 +5,7 @@
   class="absolute top-0 left-0 w-full h-full object-cover pointer-events-none"
   [src]="videoUrl"
   frameborder="0"
+  (error)="handleIframeError($event)"
   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
   allowfullscreen
 ></iframe>
@@ -13,13 +14,11 @@
   <div class="absolute inset-0 bg-gradient-to-r from-black to-transparent">
     <div class="flex flex-col justify-center h-full px-12 w-1/2">
       <!-- Título -->
-      <h1 class="text-6xl font-bold text-white mb-4">Animal</h1>
+      <h1 class="text-6xl font-bold text-white mb-4">{{bannerTitle}}</h1>
 
       <!-- Descripción -->
       <p class="text-lg text-white mb-8 w-4/5">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-        veniam, quis nostrud exercitation ullamco.
+       {{bannerOverview}}
       </p>
 
       <!-- Botones -->

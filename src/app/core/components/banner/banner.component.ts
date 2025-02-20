@@ -3,6 +3,7 @@ import {
   Component,
   ElementRef,
   inject,
+  Input,
   OnInit,
   ViewChild,
 } from '@angular/core';
@@ -16,20 +17,66 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
   styleUrl: './banner.component.css',
 })
 export class BannerComponent {
+
   @ViewChild('youtubePlayer') youtubePlayer!: ElementRef;
   private sanitizer = inject(DomSanitizer);
-  videoUrl: SafeResourceUrl;
+  videoUrl!: SafeResourceUrl;
   isPlaying: boolean = false;
+  @Input({required:true}) bannerTitle!: string;
+  @Input() bannerOverview!:string;
+  private _videoId:string='HehXywNUp6E'; // Video inicial por defecto
 
-  constructor() {
-    const videoId = '_HUjUzHP-Fs';
-    this.videoUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
-      `https://www.youtube.com/embed/${videoId}?enablejsapi=1&controls=0&loop=1&playlist=${videoId}&modestbranding=1&showinfo=0&rel=0&iv_load_policy=3&cc_load_policy=3&disablekb=1&playsinline=1&autoplay=1&mute=1&cc_lang_pref=&cc=0&hl=en` // Agregamos autoplay=1
-    );
+
+  @Input() set videoId(value:string){
+    if(value){
+      this._videoId=value;
+      this.updateVideoUrl();
+    }
   }
 
+  constructor() {
+
+    this.updateVideoUrl();
+  }
+
+
+  updateVideoUrl(){
+
+    if (!this._videoId) {
+      // Si no hay video, puedes mostrar una imagen de fallback
+      // o mantener el video anterior
+      return;
+    }
+    // Obtener el origen para mitigar problemas de cookies
+  const origin = typeof window !== 'undefined' ? window.location.origin : '';
+
+  this.videoUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
+    `https://www.youtube-nocookie.com/embed/${this._videoId}?` +
+    `enablejsapi=1` +
+    `&controls=0` +
+    `&loop=1` +
+    `&playlist=${this._videoId}` +
+    `&modestbranding=1` +
+    `&showinfo=0` +
+    `&rel=0` +
+    `&iv_load_policy=3` +
+    `&cc_load_policy=3` +
+    `&disablekb=1` +
+    `&playsinline=1` +
+    `&autoplay=1` +
+    `&mute=1` +
+    `&cc=0` +
+    `&hl=en`
+  );
+
+  }
   ngOnInit() {
     // El video se iniciará automáticamente cuando el componente se monte
+  }
+
+  handleIframeError(event: any) {
+    console.log('Iframe error:', event);
+    // Podríamos mostrar una imagen de fallback u otro contenido
   }
 
   toogleVideo() {

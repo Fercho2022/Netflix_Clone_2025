@@ -1,4 +1,4 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA, inject, Input, OnInit } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
 import { MovieService } from '../../../services/movie.service';
 import { Movie } from '../../../interfaces/Movie/Movie';
 import { register } from 'swiper/element/bundle';
@@ -21,6 +21,7 @@ export class MovieCarrouselComponent implements OnInit {
   showModal = false;
   @Input() peliculas: Movie[]=[];
   @Input() title: string='';
+  @Output() movieSelected=new EventEmitter<Movie>();
 
 
   ngOnInit() {
@@ -32,6 +33,8 @@ export class MovieCarrouselComponent implements OnInit {
   openMovieDetails(movie: Movie) {
     this.selectedMovie = movie;
     this.showModal = true;
+    console.log(movie);
+    this.movieSelected.emit(movie);
   }
 
   closeModal() {
