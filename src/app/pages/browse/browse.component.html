@@ -1,9 +1,44 @@
-<app-header [userImg]="userProfileImg"/>
-<app-banner [bannerTitle]="bannerTitle" [bannerOverview]="bannerOverview" [videoId]="bannerVideoId"></app-banner>
-<div class="space-y-0 mt-12">
-<app-movie-carrousel (movieSelected)="updateBanner($event)" [title]="'Películas Populares'" [peliculas]="popularMovies"></app-movie-carrousel>
-<app-movie-carrousel (movieSelected)="updateBanner($event)" [title]="'Películas mejor Puntuadas'" [peliculas]="topRatedMovies"></app-movie-carrousel>
-<app-movie-carrousel (movieSelected)="updateBanner($event)" [title]="'Películas Estrenos'" [peliculas]="upcomingMovies"></app-movie-carrousel>
-<app-movie-carrousel (movieSelected)="updateBanner($event)" [title]="'Pelìculas Disponibles'" [peliculas]="nowPlayingMovies"></app-movie-carrousel>
-<app-movie-carrousel (movieSelected)="updateBanner($event)" [title]="'Series mejor Puntuadas'" [peliculas]="tvShows"></app-movie-carrousel>
+<div class="min-h-screen bg-black">
+  <!-- Header -->
+  <app-header [userImg]="userProfileImg"/>
+
+  <!-- Banner -->
+  <app-banner
+    [bannerTitle]="bannerTitle"
+    [bannerOverview]="bannerOverview"
+    [videoId]="bannerVideoId"
+  ></app-banner>
+
+  <!-- Sección de Carruseles -->
+  <div class="space-y-4 sm:space-y-6 md:space-y-8 mt-8 sm:mt-10 md:mt-12">
+    <app-movie-carrousel
+      (movieSelected)="updateBanner($event)"
+      [title]="'Películas Populares'"
+      [peliculas]="popularMovies"
+    ></app-movie-carrousel>
+
+    <app-movie-carrousel
+      (movieSelected)="updateBanner($event)"
+      [title]="'Películas mejor Puntuadas'"
+      [peliculas]="topRatedMovies"
+    ></app-movie-carrousel>
+
+    <app-movie-carrousel
+      (movieSelected)="updateBanner($event)"
+      [title]="'Películas Estrenos'"
+      [peliculas]="upcomingMovies"
+    ></app-movie-carrousel>
+
+    <app-movie-carrousel
+      (movieSelected)="updateBanner($event)"
+      [title]="'Películas Disponibles'"
+      [peliculas]="nowPlayingMovies"
+    ></app-movie-carrousel>
+
+    <app-movie-carrousel
+      (movieSelected)="updateBanner($event)"
+      [title]="'Series mejor Puntuadas'"
+      [peliculas]="tvShows"
+    ></app-movie-carrousel>
+  </div>
 </div>

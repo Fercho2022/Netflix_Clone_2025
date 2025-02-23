@@ -1,17 +1,22 @@
-<!-- Agrega overflow-y-auto o overflow-y-scroll al body o al contenedor principal HTML -->
-<div class="relative h-[150vh]"> <!-- Aquí forzamos que sea más alto que el viewport -->
-  <div class="fixed w-full h-screen">
+<div class="relative min-h-screen w-full bg-black">
+  <!-- Contenedor de imagen de fondo -->
+  <div class="fixed inset-0">
     <img
       src="https://www.teknofilo.com/wp-content/uploads/2021/06/Netflix-1280x720.jpg"
-      alt=""
+      alt="Netflix Background"
       class="w-full h-full object-cover"
     >
+    <!-- Overlay para mejorar legibilidad -->
+    <div class="absolute inset-0 bg-black bg-opacity-40"></div>
   </div>
 
-  <div class="w-full md:w-3/12 absolute bg-black rounded-lg text-white my-36 mx-auto p-12 right-0 left-0 bg-opacity-70">
-    <h1 class="font-bold text-3xl py-4">Netflix Sign In</h1>
-  <div id="google-btn">
-
-  </div>
+  <!-- Contenedor del formulario de login -->
+  <div class="relative flex justify-center items-center min-h-screen px-4 py-8">
+    <div class="w-full max-w-[440px] bg-black bg-opacity-70 rounded-lg p-4 sm:p-8 md:p-12">
+      <h1 class="font-bold text-2xl sm:text-3xl text-white mb-6">Netflix Sign In</h1>
+      <div id="google-btn" class="flex justify-center">
+        <!-- El botón de Google se insertará aquí -->
+      </div>
+    </div>
   </div>
 </div>
