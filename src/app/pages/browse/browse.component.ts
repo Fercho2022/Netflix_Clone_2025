@@ -12,7 +12,7 @@ import { HeaderComponent } from '../../core/components/header/header.component';
 import { MovieService } from '../../services/movie.service';
 import { MovieCarrouselComponent } from '../../core/components/movie-carrousel/movie-carrousel.component';
 import { Movie } from '../../interfaces/Movie/Movie';
-import { forkJoin } from 'rxjs';
+import { catchError, forkJoin, map, of, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-browse',
@@ -70,17 +70,19 @@ export class BrowseComponent implements AfterViewInit, OnInit {
     });
 
     this.movieService.getTVShows().subscribe((response) => {
-      this.tvShows = response.results;
-    });
-  }
 
+      this.tvShows = response.results;
+
+  })
+}
   // Método para actualizar el banner
   updateBanner(content: any) {
+
     // Las series usan 'name', las películas usan 'title'
     this.bannerTitle = content.title || content.name;
     this.bannerOverview = content.overview;
 
-    // Mejor detección del tipo de contenido
+
     // Mejor detección del tipo de contenido
     let mediaType: 'movie' | 'tv' = 'movie'; // Por defecto asumimos película
     if (content.name && !content.title) {
@@ -91,8 +93,10 @@ export class BrowseComponent implements AfterViewInit, OnInit {
     this.movieService
       .getVideoTrailer(content.id, mediaType)
       .subscribe((trailer) => {
+
         if (trailer) {
           this.bannerVideoId = trailer.key;
+
         } else {
           // Si no hay trailer, puedes mostrar una imagen estática alternativa
           this.bannerVideoId = ''; // O mantener el video actual

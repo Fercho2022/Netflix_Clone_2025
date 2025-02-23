@@ -1,8 +1,9 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, ElementRef, EventEmitter, inject, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { MovieService } from '../../../services/movie.service';
 import { Movie } from '../../../interfaces/Movie/Movie';
 import { register } from 'swiper/element/bundle';
 import { CommonModule } from '@angular/common';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 register();
 
@@ -15,13 +16,24 @@ register();
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class MovieCarrouselComponent implements OnInit {
+
   private movieService = inject(MovieService);
+  private sanitizer = inject(DomSanitizer);
+
   movies: Movie[] = [];
-  selectedMovie: Movie | null = null;
+  selectedMovie: any | null = null;
   showModal = false;
+
   @Input() peliculas: Movie[]=[];
   @Input() title: string='';
   @Output() movieSelected=new EventEmitter<Movie>();
+
+  isLoading: boolean = true;
+
+  //----------Agregados para el trailer----------------------
+  trailerUrl: SafeResourceUrl | null = null;
+  isPlaying: boolean = true;
+  @ViewChild('modalYoutubePlayer') modalYoutubePlayer!:ElementRef;
 
 
   ngOnInit() {
@@ -30,15 +42,69 @@ export class MovieCarrouselComponent implements OnInit {
 
 
 
-  openMovieDetails(movie: Movie) {
+  openMovieDetails(movie: any) {
+
     this.selectedMovie = movie;
     this.showModal = true;
-    console.log(movie);
+    this.isLoading = true; // Activar loading
     this.movieSelected.emit(movie);
+
+    // Detectar si es película o serie
+
+    let mediaType: 'movie' | 'tv' = 'movie';  // Por defecto asumimos película
+    if (movie.name && !movie.title) {
+      mediaType = 'tv';  // Si tiene name pero no title, es una serie
+    }
+
+    // En el método que carga el trailer (por ejemplo, openMovieDetails)
+this.movieService.getVideoTrailer(movie.id, mediaType).subscribe(
+  (trailer) => {
+    if (trailer) {
+      console.log(trailer);
+      this.trailerUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
+        `https://www.youtube-nocookie.com/embed/${trailer.key}?` +
+        `autoplay=1` +          // Reproducción automática
+        `&mute=0` +             // Con sonido
+        `&controls=0` +         // Sin controles
+        `&disablekb=1` +        // Deshabilitar teclado
+        `&modestbranding=1` +   // Logo de YouTube discreto
+        `&iv_load_policy=3` +   // Ocultar anotaciones
+        `&rel=0` +              // Sin videos relacionados
+        `&showinfo=0` +         // Sin información del video
+        `&fs=0` +               // Sin botón de pantalla completa
+        `&cc_load_policy=0` +   // Sin subtítulos
+        `&enablejsapi=1`        // Habilitar API JS para control
+      );
+      this.isPlaying = true;    // Iniciar con estado "reproduciendo"
+    }
+    this.isLoading = false; // Desactivar loading cuando se complete
+  },
+
+);
   }
+
 
   closeModal() {
     this.showModal = false;
     this.selectedMovie = null;
+    this.trailerUrl = null;
+  }
+
+  toggleVideoPlayback() {
+    if (this.modalYoutubePlayer && this.modalYoutubePlayer.nativeElement) {
+      const iframe = this.modalYoutubePlayer.nativeElement;
+      if (this.isPlaying) {
+        iframe.contentWindow.postMessage(
+          '{"event":"command", "func": "pauseVideo", "args": ""}',
+          '*'
+        );
+      } else {
+        iframe.contentWindow.postMessage(
+          '{"event":"command", "func": "playVideo", "args": ""}',
+          '*'
+        );
+      }
+      this.isPlaying = !this.isPlaying;
+    }
   }
 }

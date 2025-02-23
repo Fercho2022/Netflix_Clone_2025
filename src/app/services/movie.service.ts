@@ -16,7 +16,7 @@ export class MovieService {
     params: {
       include_adult: 'false',
       include_video: 'true',
-      language: 'en-US',
+      language: 'es-ES',
       page: '1',
       sort_by: 'popularity.desc',
     },
@@ -43,7 +43,7 @@ export class MovieService {
     return this.http.get(`${this.baseUrl}/movie/now_playing`, this.options);
   }
   getTVShows(): Observable<any> {
-    return this.http.get(`${this.baseUrl}/discover/tv`, this.options);
+    return this.http.get(`${this.baseUrl}/tv/top_rated`, this.options);
   }
   getBannerImage() {
     return this.http.get(
@@ -80,6 +80,7 @@ export class MovieService {
       .pipe(
         map((response: VideoResponse) => {
           const videos = response.results;
+
 
           // Primero intentamos encontrar un trailer oficial
           let video = videos.find(

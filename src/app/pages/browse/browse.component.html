@@ -1,9 +1,9 @@
 <app-header [userImg]="userProfileImg"/>
 <app-banner [bannerTitle]="bannerTitle" [bannerOverview]="bannerOverview" [videoId]="bannerVideoId"></app-banner>
 <div class="space-y-0 mt-12">
-<app-movie-carrousel (movieSelected)="updateBanner($event)" [title]="'Popular movies'" [peliculas]="popularMovies"></app-movie-carrousel>
-<app-movie-carrousel (movieSelected)="updateBanner($event)" [title]="'Top Rated Movies'" [peliculas]="topRatedMovies"></app-movie-carrousel>
-<app-movie-carrousel (movieSelected)="updateBanner($event)" [title]="'Upcoming Movies'" [peliculas]="upcomingMovies"></app-movie-carrousel>
-<app-movie-carrousel (movieSelected)="updateBanner($event)" [title]="'Now Playing Movies'" [peliculas]="nowPlayingMovies"></app-movie-carrousel>
-<app-movie-carrousel (movieSelected)="updateBanner($event)" [title]="'Trending TV shows'" [peliculas]="tvShows"></app-movie-carrousel>
+<app-movie-carrousel (movieSelected)="updateBanner($event)" [title]="'Películas Populares'" [peliculas]="popularMovies"></app-movie-carrousel>
+<app-movie-carrousel (movieSelected)="updateBanner($event)" [title]="'Películas mejor Puntuadas'" [peliculas]="topRatedMovies"></app-movie-carrousel>
+<app-movie-carrousel (movieSelected)="updateBanner($event)" [title]="'Películas Estrenos'" [peliculas]="upcomingMovies"></app-movie-carrousel>
+<app-movie-carrousel (movieSelected)="updateBanner($event)" [title]="'Pelìculas Disponibles'" [peliculas]="nowPlayingMovies"></app-movie-carrousel>
+<app-movie-carrousel (movieSelected)="updateBanner($event)" [title]="'Series mejor Puntuadas'" [peliculas]="tvShows"></app-movie-carrousel>
 </div>
