@@ -1,151 +1,210 @@
 <div class="container mx-auto px-4">
-  <p class="font-semibold text-xl sm:text-2xl ml-2 sm:ml-3 mb-1 text-white">{{title}}</p>
+  <p class="font-semibold text-xl sm:text-2xl ml-2 sm:ml-3 mb-1 text-white">
+    {{ title }}
+  </p>
   <swiper-container
-  slides-per-view="3"
-
-
-  space-between="40"
-  space-between-sm="20"
-  space-between-md="15"
-  navigation="true"
-  class="w-full !px-[20px] sm:!px-[35px] md:!px-[50px] !py-[20px]"
->
-  @for(movie of peliculas; track movie.id) {
+    slides-per-view="4"
+    space-between="40"
+    space-between-sm="20"
+    space-between-md="15"
+    navigation="true"
+    class="w-full !px-[20px] sm:!px-[35px] md:!px-[50px] !py-[20px]"
+  >
+    @for(movie of peliculas; track movie.id) {
     <swiper-slide class="swiper-slide-movie">
-      <div class="relative group cursor-pointer hover:scale-110 transition-all duration-300 hover:z-50">
+      <div
+        class="relative group cursor-pointer hover:scale-110 transition-all duration-300 hover:z-50"
+      >
         <div class="relative aspect-[2/3] overflow-hidden rounded-lg">
           <img
             [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path"
             [alt]="movie.title"
             class="w-full h-full object-cover transition-all duration-300 group-hover:brightness-50"
           />
-            <!-- Overlay con contenido -->
-            <div class="absolute inset-0 flex items-center justify-center">
-              <div class="opacity-0 group-hover:opacity-100 transition-opacity duration-300 px-2 sm:px-4 py-2 w-full">
-                <h3 class="text-white text-base sm:text-lg font-bold mb-1 sm:mb-2 text-center line-clamp-2">
-                  {{ movie.title }}
-                </h3>
-                <div class="flex items-center justify-center gap-1 mb-1 sm:mb-2">
-                  <span class="text-yellow-400">★</span>
-                  <span class="text-white text-sm sm:text-base">
-                    {{movie.vote_average.toFixed(1)}}
-                  </span>
-                </div>
-                <!-- Solo mostrar overview en pantallas más grandes -->
-                <p class="hidden sm:block text-white text-xs sm:text-sm mb-2 sm:mb-3 text-center line-clamp-3">
-                  {{ movie.overview }}
-                </p>
-                <!-- Botón más pequeño en móviles -->
-                <button
-                  (click)="openMovieDetails(movie)"
-                  class="w-full sm:w-auto mx-auto bg-red-600 hover:bg-red-700 text-white px-3 sm:px-4 py-1 sm:py-2 rounded-md transition-colors duration-300 text-sm sm:text-base block text-center"
-                >
-                  Ver más
-                </button>
+          <!-- Overlay con contenido -->
+          <div class="absolute inset-0 flex items-center justify-center">
+            <div
+              class="opacity-0 group-hover:opacity-100 transition-opacity duration-300 px-2 sm:px-4 py-2 w-full"
+            >
+              <h3
+                class="text-white text-base sm:text-lg font-bold mb-1 sm:mb-2 text-center line-clamp-2"
+              >
+                {{ movie.title }}
+              </h3>
+              <div class="flex items-center justify-center gap-1 mb-1 sm:mb-2">
+                <span class="text-yellow-400">★</span>
+                <span class="text-white text-sm sm:text-base">
+                  {{ movie.vote_average.toFixed(1) }}
+                </span>
               </div>
+              <!-- Solo mostrar overview en pantallas más grandes -->
+              <p
+                class="hidden sm:block text-white text-xs sm:text-sm mb-2 sm:mb-3 text-center line-clamp-3"
+              >
+                {{ movie.overview }}
+              </p>
+              <!-- Botón más pequeño en móviles -->
+              <button
+                (click)="openMovieDetails(movie)"
+                class="w-full sm:w-auto mx-auto bg-red-600 hover:bg-red-700 text-white px-3 sm:px-4 py-1 sm:py-2 rounded-md transition-colors duration-300 text-sm sm:text-base block text-center"
+              >
+                Ver más
+              </button>
             </div>
           </div>
         </div>
-      </swiper-slide>
+      </div>
+    </swiper-slide>
     }
   </swiper-container>
 
   <!-- Modal responsivo -->
   @if (showModal && selectedMovie) {
-    <div class="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto min-h-screen w-screen">
-      <!-- Overlay -->
-      <div class="fixed inset-0 bg-black transition-opacity duration-[5000ms] ease-out"
-        [class.bg-opacity-0]="!showModal"
-        [class.bg-opacity-60]="showModal">
-      </div>
+  <div
+    class="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto min-h-screen w-screen"
+  >
+    <!-- Overlay -->
+    <div
+      class="fixed inset-0 bg-black transition-opacity duration-[5000ms] ease-out"
+      [class.bg-opacity-0]="!showModal"
+      [class.bg-opacity-60]="showModal"
+    ></div>
 
-      <!-- Contenedor del modal -->
-      <div
-        class="relative bg-gray-900 rounded-lg w-[90%] sm:w-full max-w-4xl m-auto transform transition-all duration-[5000ms] ease-out overflow-y-auto max-h-[90vh] sm:max-h-[95vh]"
-        [class.opacity-0]="!showModal"
-        [class.opacity-100]="showModal"
-        [class.scale-50]="!showModal"
-        [class.scale-100]="showModal"
+    <!-- Contenedor del modal -->
+    <div
+      class="relative bg-gray-900 rounded-lg w-[90%] sm:w-full max-w-4xl m-auto transform transition-all duration-[5000ms] ease-out overflow-y-auto max-h-[90vh] sm:max-h-[95vh]"
+      [class.opacity-0]="!showModal"
+      [class.opacity-100]="showModal"
+      [class.scale-50]="!showModal"
+      [class.scale-100]="showModal"
+    >
+      <!-- Botón cerrar -->
+      <button
+        (click)="closeModal()"
+        class="absolute top-2 right-2 text-white bg-gray-800 hover:bg-red-600 rounded-full p-2 z-10"
       >
-        <!-- Botón cerrar -->
-        <button (click)="closeModal()"
-          class="absolute top-2 right-2 text-white bg-gray-800 hover:bg-red-600 rounded-full p-2 z-10">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 sm:h-6 sm:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-          </svg>
-        </button>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-4 w-4 sm:h-6 sm:w-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M6 18L18 6M6 6l12 12"
+          />
+        </svg>
+      </button>
 
-        <!-- Contenido del modal -->
-        <div class="flex flex-col md:flex-row">
-          <!-- Imagen -->
-          <div class="w-full md:w-2/5 h-[40vh] md:h-auto">
-            <img [src]="'https://image.tmdb.org/t/p/w500' + selectedMovie.poster_path"
-              [alt]="selectedMovie.title || selectedMovie.name"
-              class="w-full h-full object-cover"/>
+      <!-- Contenido del modal -->
+      <div class="flex flex-col md:flex-row">
+        <!-- Imagen -->
+        <div class="w-full md:w-2/5 h-[40vh] md:h-auto">
+          <img
+            [src]="
+              'https://image.tmdb.org/t/p/w500' + selectedMovie.poster_path
+            "
+            [alt]="selectedMovie.title || selectedMovie.name"
+            class="w-full h-full object-cover"
+          />
+        </div>
+
+        <!-- Info y video -->
+        <div class="w-full md:w-3/5 p-4">
+          <!-- Video -->
+          <div class="aspect-video w-full mb-4">
+            @if (isLoading) {
+            <div
+              class="w-full h-full bg-gray-800 rounded-lg flex items-center justify-center"
+            >
+              <div
+                class="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-red-600"
+              ></div>
+            </div>
+            } @else if (trailerUrl) {
+            <iframe
+              #modalYoutubePlayer
+              [src]="trailerUrl"
+              class="w-full h-full rounded-lg"
+              frameborder="0"
+              allowfullscreen
+            >
+            </iframe>
+            } @else {
+            <div
+              class="w-full h-full bg-gray-800 rounded-lg flex items-center justify-center"
+            >
+              <span class="text-white text-sm">No hay trailer disponible</span>
+            </div>
+            }
           </div>
 
-          <!-- Info y video -->
-          <div class="w-full md:w-3/5 p-4">
-            <!-- Video -->
-            <div class="aspect-video w-full mb-4">
-              @if (isLoading) {
-                <div class="w-full h-full bg-gray-800 rounded-lg flex items-center justify-center">
-                  <div class="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-red-600"></div>
-                </div>
-              } @else if (trailerUrl) {
-                <iframe #modalYoutubePlayer
-                  [src]="trailerUrl"
-                  class="w-full h-full rounded-lg"
-                  frameborder="0"
-                  allowfullscreen>
-                </iframe>
+          <!-- Información -->
+          <h2 class="text-xl font-bold text-white mb-2">
+            {{ selectedMovie.title || selectedMovie.name }}
+          </h2>
+
+          <div class="flex items-center mb-2">
+            <span class="text-yellow-400 text-lg mr-2">★</span>
+            <span class="text-white"
+              >{{ selectedMovie.vote_average.toFixed(1) }}/10</span
+            >
+            <span class="text-gray-400 ml-2 text-sm"
+              >({{ selectedMovie.vote_count }} votos)</span
+            >
+          </div>
+
+          <p class="text-gray-300 text-sm mb-2">
+            Fecha:
+            {{ selectedMovie.release_date || selectedMovie.first_air_date }}
+          </p>
+
+          <div class="mb-4">
+            <h3 class="text-white font-semibold mb-1">Sinopsis</h3>
+            <p class="text-gray-300 text-sm">{{ selectedMovie.overview }}</p>
+          </div>
+
+          <!-- Botones -->
+          <div class="flex gap-2">
+            <button
+              (click)="toggleVideoPlayback()"
+              class="flex items-center bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md text-sm"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-4 w-4 mr-1"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                @if (isPlaying) {
+                <path d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                } @else {
+                <path
+                  d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"
+                />
+                }
+              </svg>
+              {{ isPlaying ? "Pausar" : "Reproducir" }}
+            </button>
+            <button (click)="toggleFavorite()"
+              class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-md text-sm flex items-center"
+            >
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
+              @if (isFavorite) {
+                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
               } @else {
-                <div class="w-full h-full bg-gray-800 rounded-lg flex items-center justify-center">
-                  <span class="text-white text-sm">No hay trailer disponible</span>
-                </div>
+                <path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd" />
               }
-            </div>
-
-            <!-- Información -->
-            <h2 class="text-xl font-bold text-white mb-2">
-              {{ selectedMovie.title || selectedMovie.name }}
-            </h2>
-
-            <div class="flex items-center mb-2">
-              <span class="text-yellow-400 text-lg mr-2">★</span>
-              <span class="text-white">{{ selectedMovie.vote_average.toFixed(1) }}/10</span>
-              <span class="text-gray-400 ml-2 text-sm">({{ selectedMovie.vote_count }} votos)</span>
-            </div>
-
-            <p class="text-gray-300 text-sm mb-2">
-              Fecha: {{ selectedMovie.release_date || selectedMovie.first_air_date }}
-            </p>
-
-            <div class="mb-4">
-              <h3 class="text-white font-semibold mb-1">Sinopsis</h3>
-              <p class="text-gray-300 text-sm">{{ selectedMovie.overview }}</p>
-            </div>
-
-            <!-- Botones -->
-            <div class="flex gap-2">
-              <button (click)="toggleVideoPlayback()"
-                class="flex items-center bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md text-sm">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
-                  @if (isPlaying) {
-                    <path d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                  } @else {
-                    <path d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"/>
-                  }
-                </svg>
-                {{ isPlaying ? 'Pausar' : 'Reproducir' }}
-              </button>
-              <button class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-md text-sm">
-                Agregar a mi lista
-              </button>
-            </div>
+            </svg>
+            {{ isFavorite ? 'Quitar de mi lista' : 'Agregar a mi lista' }}
+            </button>
           </div>
         </div>
       </div>
     </div>
+  </div>
   }
 </div>

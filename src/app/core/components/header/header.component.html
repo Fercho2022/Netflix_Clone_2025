@@ -9,9 +9,12 @@
       <nav class="hidden sm:block">
         <ul class="flex gap-2 sm:gap-6">
           @for (item of navList; track item) {
-            <li class="text-white hover:text-gray-300 cursor-pointer text-sm sm:text-base">
-              {{ item }}
-            </li>
+          <li
+            (click)="navigateTo(item)"
+            class="text-white hover:text-gray-300 cursor-pointer text-sm sm:text-base"
+          >
+            {{ item }}
+          </li>
           }
         </ul>
       </nav>

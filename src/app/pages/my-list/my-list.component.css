@@ -1,0 +1,26 @@
+/* my-list.component.css */
+.movie-card {
+  transition: transform 0.3s ease, z-index 0s 0.3s;
+}
+
+.movie-card:hover {
+  transform: scale(1.2);
+  z-index: 10;
+  transition: transform 0.3s ease, z-index 0s;
+}
+
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Transiciones para el trailer en pantalla completa */
+.fixed {
+  transition: opacity 1s ease;
+}
+
+.transform {
+  transition: transform 1s ease, opacity 1s ease;
+}

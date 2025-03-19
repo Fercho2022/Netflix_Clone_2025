@@ -1,4 +1,4 @@
-import { Movie } from "./Movie/Movie";
+import { Movie } from "../Movie/Movie";
 
 export interface MovieResponse {
   page: number;

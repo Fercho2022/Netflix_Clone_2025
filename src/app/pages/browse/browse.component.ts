@@ -9,7 +9,7 @@ import {
 import { AuthService } from '../../services/AuthService/auth.service';
 import { isPlatformBrowser } from '@angular/common';
 import { HeaderComponent } from '../../core/components/header/header.component';
-import { MovieService } from '../../services/movie.service';
+import { MovieService } from '../../services/MovieService/movie.service';
 import { MovieCarrouselComponent } from '../../core/components/movie-carrousel/movie-carrousel.component';
 import { Movie } from '../../interfaces/Movie/Movie';
 import { catchError, forkJoin, map, of, switchMap } from 'rxjs';

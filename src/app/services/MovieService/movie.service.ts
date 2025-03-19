@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { catchError, map, Observable, of } from 'rxjs';
-import { VideoResponse } from '../interfaces/Video/VideoResponse';
-import { Video } from '../interfaces/Video/Videos';
+import { VideoResponse } from '../../interfaces/Video/VideoResponse';
+import { Video } from '../../interfaces/Video/Videos';
 
 @Injectable({
   providedIn: 'root',
