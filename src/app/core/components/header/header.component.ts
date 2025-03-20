@@ -1,5 +1,8 @@
-import { Component, Input } from '@angular/core';
+import { Component, inject, Input, OnInit, PLATFORM_ID } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from '../../../services/AuthService/auth.service';
+import { isPlatformBrowser } from '@angular/common';
+import { GoogleUserData } from '../../../interfaces/GoogleUserData/GoogleUserData';
 
 @Component({
   selector: 'app-header',
@@ -8,11 +11,14 @@ import { Router } from '@angular/router';
   templateUrl: './header.component.html',
   styleUrl: './header.component.css',
 })
-export class HeaderComponent {
-
+export class HeaderComponent implements OnInit{
+  private router = inject(Router);
+  private authService = inject(AuthService);
+  private platformId = inject(PLATFORM_ID);
   @Input({ required: true }) userImg: string = '';
 
-  constructor(private router: Router) {}
+  // Añade esta propiedad
+  userName: string = '';
 
   navList: string[] = [
     'Inicio',
@@ -24,6 +30,12 @@ export class HeaderComponent {
   ];
 
   isDropdownOpen = false;
+  ngOnInit(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      const userData = JSON.parse(sessionStorage.getItem('loggedInUser') || '{}') as GoogleUserData;
+      this.userName = userData.name || userData.given_name || 'Usuario';
+    }
+  }
 
   toggleDropdown() {
     this.isDropdownOpen = !this.isDropdownOpen;
@@ -32,15 +44,15 @@ export class HeaderComponent {
   navigateTo(item: string) {
     if (item === 'Mi Lista') {
       this.router.navigate(['/my-list']);
-    }else if (item==='Inicio'){
-      this.router.navigate(['/browse'])
-
+    } else if (item === 'Inicio') {
+      this.router.navigate(['/browse']);
     }
     // Puedes agregar más navegaciones para otros ítems
   }
   logout() {
     // Aquí implementas la lógica de logout
-    console.log('Logging out...');
+    console.log('Iniciando cierre de sesión...');
+    this.authService.signOut();
     this.isDropdownOpen = false;
   }
 }

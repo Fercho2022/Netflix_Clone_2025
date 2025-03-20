@@ -20,25 +20,30 @@
       </nav>
     </div>
 
-    <div class="flex items-center gap-2 sm:gap-4">
-      <div class="flex items-center text-white">
-        <span class="hidden sm:inline">Welcome</span>
-        <span class="text-sm sm:text-base ml-1">Fernando</span>
-        <img
-          [src]="userImg"
-          alt="Profile"
-          class="w-6 h-6 sm:w-8 sm:h-8 rounded-full object-cover ml-2"
-        />
-      </div>
-
-      <div class="h-6 w-[1px] bg-gray-300 hidden sm:block"></div>
-
-      <button
-        (click)="logout()"
-        class="text-white hover:text-gray-300 text-sm sm:text-base"
-      >
-        Sign Out
-      </button>
+    <!-- Segunda sección con usuario y botón de cerrar sesión (rebalanceada) -->
+  <div class="flex items-center space-x-4">
+    <!-- Información del usuario -->
+    <div class="flex items-center text-white">
+      <span class="hidden sm:inline mr-1">Bienvenido</span>
+      <span class="text-sm sm:text-base">{{ userName }}</span>
+      <img
+        [src]="userImg"
+        alt="Profile"
+        class="w-6 h-6 sm:w-8 sm:h-8 rounded-full object-cover ml-2"
+      />
     </div>
+
+    <!-- Separador vertical con espaciado uniforme -->
+    <div class="h-5 w-[1px] bg-gray-300 mx-1 hidden sm:block"></div>
+
+    <!-- Botón de cerrar sesión -->
+    <button
+      (click)="logout()"
+      class="text-white hover:text-gray-300 text-sm sm:text-base"
+    >
+      Cerrar sesión
+    </button>
   </div>
+</div>
+
 </header>

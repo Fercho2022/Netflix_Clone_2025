@@ -110,4 +110,10 @@ export class MovieService {
         })
       );
   }
+
+  // Obtener películas similares
+getSimilarContent(id: number, mediaType: 'movie' | 'tv'): Observable<any> {
+  const endpoint = mediaType === 'movie' ? 'movie' : 'tv';
+  return this.http.get<any>(`${this.baseUrl}/${endpoint}/${id}/similar`, this.options);
+}
 }

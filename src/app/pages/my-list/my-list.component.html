@@ -1,86 +1,82 @@
-<!-- my-list.component.html -->
+<!-- my-list.component.html completo sin barras de desplazamiento -->
 <app-header [userImg]="userProfileImg"></app-header>
 
-<div class="container mx-auto px-4 py-8 bg-black min-h-screen">
+<div class="w-full min-h-screen bg-black px-4 sm:px-8 py-8">
   <h1 class="text-3xl font-bold text-white mb-8">Mi Lista</h1>
 
-  <!-- Reemplaza la tarjeta actual en el grid de my-list.component.html con esta versión actualizada -->
-
-<div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
-  @if (favorites.length > 0) {
-    @for (movie of favorites; track movie.id) {
-      <div
-        class="movie-card relative transition-all duration-300 cursor-pointer group hover:z-50"
-        (click)="openDetailModal(movie, $event)">
-
-        <!-- Imagen base -->
-        <div class="aspect-[2/3] overflow-hidden rounded-lg shadow-md group-hover:shadow-xl transition-all duration-300">
-          <img
-            [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path"
-            [alt]="movie.title"
-            class="w-full h-full object-cover transition-all duration-300 group-hover:scale-105 group-hover:brightness-[0.85]"
-          />
-        </div>
-
-        <!-- Overlay de información en hover -->
+  <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+    @if (favorites.length > 0) {
+      @for (movie of favorites; track movie.id) {
         <div
-          class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-3
-                transform translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-300">
-          <div class="flex flex-col gap-1">
-            <!-- Botones de acción -->
-            <div class="flex gap-2 mb-2">
-              <button
-                (click)="playMovie(movie, $event)"
-                class="w-8 h-8 rounded-full bg-white text-black flex items-center justify-center hover:bg-red-600 hover:text-white transition-colors"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
-                  <path fill-rule="evenodd" d="M4.5 5.653c0-1.426 1.529-2.33 2.779-1.643l11.54 6.348c1.295.712 1.295 2.573 0 3.285L7.28 19.991c-1.25.687-2.779-.217-2.779-1.643V5.653z" clip-rule="evenodd" />
-                </svg>
-              </button>
-              <button
-                (click)="removeFromFavorites(movie, $event)"
-                class="w-8 h-8 rounded-full bg-gray-700 text-white flex items-center justify-center hover:bg-gray-500 transition-colors"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
-                  <path fill-rule="evenodd" d="M19.5 12.75a.75.75 0 000-1.5h-15a.75.75 0 000 1.5h15z" clip-rule="evenodd" />
-                </svg>
-              </button>
-              <button
-                (click)="openDetailModal(movie, $event)"
-                class="w-8 h-8 rounded-full bg-gray-700 text-white flex items-center justify-center hover:bg-gray-500 transition-colors"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
-                  <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm-1.125 4.5a1.125 1.125 0 102.25 0 1.125 1.125 0 00-2.25 0zm4.875 19.5a1.125 1.125 0 100-2.25 1.125 1.125 0 000 2.25zm0-15.75a.75.75 0 01.75.75v8.25a.75.75 0 01-1.5 0V6.75a.75.75 0 01.75-.75z" clip-rule="evenodd" />
-                </svg>
-              </button>
-            </div>
+          class="movie-card relative transition-all duration-300 cursor-pointer group hover:z-50"
+          (click)="openDetailModal(movie, $event)">
 
-            <!-- Título y detalles -->
-            <h3 class="text-white font-bold text-sm line-clamp-1">{{ movie.title }}</h3>
-            <div class="flex items-center text-xs text-gray-400 mb-1">
-              <span class="mr-2">{{ getYear(movie.release_date) }}</span>
-              <span class="flex items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-3 h-3 text-yellow-400 mr-1">
-                  <path fill-rule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z" clip-rule="evenodd" />
-                </svg>
-                {{ movie.vote_average?.toFixed(1) }}
-              </span>
+          <!-- Imagen base -->
+          <div class="aspect-[2/3] overflow-hidden rounded-lg shadow-md group-hover:shadow-xl transition-all duration-300">
+            <img
+              [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path"
+              [alt]="movie.title"
+              class="w-full h-full object-cover transition-all duration-300 group-hover:scale-105 group-hover:brightness-[0.85]"
+            />
+          </div>
+
+          <!-- Overlay de información en hover -->
+          <div
+            class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-3
+                  transform translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-300">
+            <div class="flex flex-col gap-1">
+              <!-- Botones de acción -->
+              <div class="flex gap-2 mb-2">
+                <button
+                  (click)="playMovie(movie, $event)"
+                  class="w-8 h-8 rounded-full bg-white text-black flex items-center justify-center hover:bg-red-600 hover:text-white transition-colors"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
+                    <path fill-rule="evenodd" d="M4.5 5.653c0-1.426 1.529-2.33 2.779-1.643l11.54 6.348c1.295.712 1.295 2.573 0 3.285L7.28 19.991c-1.25.687-2.779-.217-2.779-1.643V5.653z" clip-rule="evenodd" />
+                  </svg>
+                </button>
+                <button
+                  (click)="removeFromFavorites(movie, $event)"
+                  class="w-8 h-8 rounded-full bg-gray-700 text-white flex items-center justify-center hover:bg-gray-500 transition-colors"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
+                    <path fill-rule="evenodd" d="M19.5 12.75a.75.75 0 000-1.5h-15a.75.75 0 000 1.5h15z" clip-rule="evenodd" />
+                  </svg>
+                </button>
+                <button
+                  (click)="openDetailModal(movie, $event)"
+                  class="w-8 h-8 rounded-full bg-gray-700 text-white flex items-center justify-center hover:bg-gray-500 transition-colors"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
+                    <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm-1.125 4.5a1.125 1.125 0 102.25 0 1.125 1.125 0 00-2.25 0zm4.875 19.5a1.125 1.125 0 100-2.25 1.125 1.125 0 000 2.25zm0-15.75a.75.75 0 01.75.75v8.25a.75.75 0 01-1.5 0V6.75a.75.75 0 01.75-.75z" clip-rule="evenodd" />
+                  </svg>
+                </button>
+              </div>
+
+              <!-- Título y detalles -->
+              <h3 class="text-white font-bold text-sm line-clamp-1">{{ movie.title }}</h3>
+              <div class="flex items-center text-xs text-gray-400 mb-1">
+                <span class="mr-2">{{ getYear(movie.release_date) }}</span>
+                <span class="flex items-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-3 h-3 text-yellow-400 mr-1">
+                    <path fill-rule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z" clip-rule="evenodd" />
+                  </svg>
+                  {{ movie.vote_average?.toFixed(1) }}
+                </span>
+              </div>
             </div>
           </div>
         </div>
+      }
+    } @else {
+      <div class="col-span-full text-center py-12">
+        <p class="text-gray-400 text-xl">No has agregado ninguna película a tu lista.</p>
+        <p class="text-gray-500 mt-2">Explora el catálogo y agrega tus películas y series favoritas.</p>
       </div>
     }
-  } @else {
-    <div class="col-span-full text-center py-12">
-      <p class="text-gray-400 text-xl">No has agregado ninguna película a tu lista.</p>
-      <p class="text-gray-500 mt-2">Explora el catálogo y agrega tus películas y series favoritas.</p>
-    </div>
-  }
-</div>
+  </div>
 
-<!-- Añade el componente del modal detallado aquí -->
-
-  <!-- Overlay de transición -->
+  <!-- Overlay de transición para trailer a pantalla completa -->
   @if (isTransitioning || showFullscreenTrailer) {
     <div
       class="fixed inset-0 bg-black z-50 flex items-center justify-center"
@@ -129,40 +125,45 @@
       }
     </div>
   }
-</div>
 
-
-
-<!-- Modal de información detallada (estilo Netflix) -->
+  <!-- Modal de información detallada (estilo Netflix) con scroll -->
 @if (selectedFavorite && showDetailModal) {
-  <div class="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto">
+  <div class="fixed inset-0 z-50 flex justify-center overflow-y-auto">
     <!-- Overlay con difuminado -->
     <div
       class="fixed inset-0 bg-black transition-opacity duration-300"
       [class.bg-opacity-0]="!showDetailModal"
-      [class.bg-opacity-70]="showDetailModal"
+      [class.bg-opacity-80]="showDetailModal"
       (click)="closeDetailModal()">
     </div>
 
-    <!-- Contenedor del modal -->
+    <!-- Contenedor del modal (con scroll) -->
     <div
-      class="relative bg-zinc-900 rounded-md w-[90%] sm:w-[85%] max-w-5xl transition-all duration-300 shadow-xl"
+      class="relative bg-zinc-900 w-full max-w-5xl transform transition-all duration-300 shadow-xl min-h-screen"
       [class.opacity-0]="!showDetailModal"
-      [class.opacity-100]="showDetailModal"
-      [class.translate-y-4]="!showDetailModal"
-      [class.translate-y-0]="showDetailModal">
+      [class.opacity-100]="showDetailModal">
 
-      <!-- Contenido superior: Vista previa del trailer/imagen -->
-      <div class="relative w-full aspect-video overflow-hidden rounded-t-md">
-        <!-- Fondo blurry mientras carga el trailer -->
-        <div class="absolute inset-0 bg-cover bg-center blur-sm brightness-75"
+      <!-- Botón cerrar (colocado en la esquina superior derecha) -->
+      <button
+        (click)="closeDetailModal()"
+        class="fixed top-4 right-4 z-50 bg-transparent text-white p-2 rounded-full hover:bg-zinc-800/50 transition-colors">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+        </svg>
+      </button>
+
+      <!-- Header con imagen de fondo y título -->
+      <div class="relative w-full" style="height: 70vh; min-height: 500px;">
+        <!-- Imagen de fondo -->
+        <div class="absolute inset-0 bg-cover bg-center bg-no-repeat"
              [style.background-image]="'url(https://image.tmdb.org/t/p/w1280' + selectedFavorite.backdrop_path + ')'">
         </div>
 
-        <!-- Overlay de degradado -->
-        <div class="absolute inset-0 bg-gradient-to-t from-zinc-900 via-transparent to-transparent opacity-90"></div>
+        <!-- Gradientes para legibilidad -->
+        <div class="absolute inset-0 bg-gradient-to-t from-zinc-900 via-zinc-900/60 to-transparent"></div>
+        <div class="absolute inset-0 bg-gradient-to-r from-black/60 via-transparent to-transparent"></div>
 
-        <!-- Trailer o imagen si no hay trailer -->
+        <!-- Trailer (si está disponible) -->
         @if (detailModalTrailerLoading) {
           <div class="absolute inset-0 flex items-center justify-center">
             <div class="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-red-600"></div>
@@ -175,33 +176,20 @@
             frameborder="0"
             allowfullscreen>
           </iframe>
-        } @else {
-          <img
-            [src]="'https://image.tmdb.org/t/p/w1280' + selectedFavorite.backdrop_path"
-            class="absolute inset-0 w-full h-full object-cover"
-            alt="Backdrop">
         }
 
-        <!-- Botón cerrar -->
-        <button
-          (click)="closeDetailModal()"
-          class="absolute top-3 right-3 z-10 bg-zinc-800 text-white p-2 rounded-full hover:bg-zinc-700 transition-colors">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-            <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
-          </svg>
-        </button>
-
-        <!-- Info y controles superpuestos al video -->
-        <div class="absolute bottom-0 left-0 right-0 p-4 sm:p-6 md:p-8">
-          <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-2 drop-shadow-lg">
+        <!-- Título y controles superpuestos -->
+        <div class="absolute bottom-0 left-0 right-0 p-8 sm:p-10 md:p-12 z-10">
+          <!-- Título grande -->
+          <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-6 drop-shadow-lg max-w-3xl">
             {{ selectedFavorite.title || selectedFavorite.name }}
           </h1>
 
           <!-- Botones de acción -->
-          <div class="flex items-center gap-2 sm:gap-3 mb-3">
+          <div class="flex items-center gap-3 mb-5">
             <button
               (click)="playFullVideo()"
-              class="bg-white hover:bg-gray-200 text-black font-semibold rounded-md px-5 py-2 flex items-center gap-2 transition-colors">
+              class="bg-white hover:bg-gray-200 text-black font-semibold rounded-md px-6 py-2 flex items-center gap-2 transition-colors">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
                 <path fill-rule="evenodd" d="M4.5 5.653c0-1.426 1.529-2.33 2.779-1.643l11.54 6.348c1.295.712 1.295 2.573 0 3.285L7.28 19.991c-1.25.687-2.779-.217-2.779-1.643V5.653z" clip-rule="evenodd" />
               </svg>
@@ -210,75 +198,136 @@
 
             <button
               (click)="removeFromFavorites(selectedFavorite, $event)"
-              class="bg-zinc-700 hover:bg-zinc-600 text-white rounded-full p-2 transition-colors">
+              class="bg-zinc-700/80 hover:bg-zinc-600 text-white rounded-full p-2 transition-colors flex items-center justify-center"
+              title="Quitar de Mi Lista">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
                 <path fill-rule="evenodd" d="M19.5 12.75a.75.75 0 000-1.5h-15a.75.75 0 000 1.5h15z" clip-rule="evenodd" />
               </svg>
             </button>
 
-            <button class="bg-zinc-700 hover:bg-zinc-600 text-white rounded-full p-2 transition-colors">
+            <button
+              class="bg-zinc-700/80 hover:bg-zinc-600 text-white rounded-full p-2 transition-colors flex items-center justify-center"
+              title="Me gusta">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
-                <path fill-rule="evenodd" d="M6.32 2.577a49.255 49.255 0 0111.36 0c1.497.174 2.57 1.46 2.57 2.93V21a.75.75 0 01-1.085.67L12 18.089l-7.165 3.583A.75.75 0 014 21V5.507c0-1.47 1.073-2.756 2.32-2.93z" clip-rule="evenodd" />
+                <path d="M7.493 18.75c-.425 0-.82-.236-.975-.632A7.48 7.48 0 016 15.375c0-1.75.599-3.358 1.602-4.634.151-.192.373-.309.6-.397.473-.183.89-.514 1.212-.924a9.042 9.042 0 012.861-2.4c.723-.384 1.35-.956 1.653-1.715a4.498 4.498 0 00.322-1.672V3a.75.75 0 01.75-.75 2.25 2.25 0 012.25 2.25c0 1.152-.26 2.243-.723 3.218-.266.558.107 1.282.725 1.282h3.126c1.026 0 1.945.694 2.054 1.715.045.422.068.85.068 1.285a11.95 11.95 0 01-2.649 7.521c-.388.482-.987.729-1.605.729H14.23c-.483 0-.964-.078-1.423-.23l-3.114-1.04a4.501 4.501 0 00-1.423-.23h-.777zM2.331 10.977a11.969 11.969 0 00-.831 4.398 12 12 0 00.52 3.507c.26.85 1.084 1.368 1.973 1.368H4.9c.445 0 .72-.498.523-.898a8.963 8.963 0 01-.924-3.977c0-1.708.476-3.305 1.302-4.666.245-.403-.028-.959-.5-.959H4.25c-.832 0-1.612.453-1.918 1.227z" />
               </svg>
             </button>
           </div>
         </div>
       </div>
 
-      <!-- Contenido inferior: Detalles y metadata -->
-      <div class="p-4 sm:p-6 md:p-8">
-        <!-- Datos relevantes -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8">
-          <div class="col-span-2">
-            <!-- Detalles básicos -->
-            <div class="flex items-center gap-4 mb-4">
-              <span class="text-green-500 font-medium">{{ calculateMatchPercentage(selectedFavorite.vote_average) }}% coincidencia</span>
-              <span class="text-gray-400">{{ getYear(selectedFavorite.release_date) }}</span>
-              <span class="px-1 text-xs border border-gray-400 text-gray-400">HD</span>
-            </div>
+      <!-- Metadata principal -->
+      <div class="px-8 sm:px-10 md:px-12 py-6">
+        <!-- Información básica -->
+        <div class="flex items-center flex-wrap gap-x-4 gap-y-2 mb-5">
+          <span class="text-green-500 font-medium">{{ calculateMatchPercentage(selectedFavorite.vote_average) }}% coincidencia</span>
+          <span class="text-gray-300">{{ getYear(selectedFavorite.release_date) }}</span>
+          <span class="px-1 text-xs border border-gray-400 text-gray-300">HD</span>
 
-            <!-- Sinopsis -->
-            <p class="text-white text-sm sm:text-base mb-6">{{ selectedFavorite.overview }}</p>
+          <!-- Clasificación por edad -->
+          <span class="px-1 py-0.5 text-xs border border-gray-400 text-gray-300 bg-gray-800/50">{{ selectedFavorite.adult ? '18+' : '13+' }}</span>
+
+          <!-- Duración (si está disponible) -->
+          <span class="text-gray-300">1 h 44 min</span>
+        </div>
+
+        <!-- Sinopsis -->
+        <p class="text-white text-sm sm:text-base mb-10 max-w-4xl">{{ selectedFavorite.overview }}</p>
+      </div>
+
+      <!-- Línea divisoria sutil -->
+      <div class="border-t border-gray-800 mx-8 sm:mx-10 md:mx-12"></div>
+
+      <!-- Información secundaria -->
+      <div class="px-8 sm:px-10 md:px-12 py-6">
+        <!-- Sección de reparto, géneros y valoración -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+          <!-- Elenco -->
+          <div>
+            <span class="text-gray-400">Elenco: </span>
+            <span class="text-gray-200">Actores (datos para obtener con la API)</span>
           </div>
 
-          <!-- Información adicional -->
-          <div class="text-sm">
-            <!-- Cast (simulado, en una implementación real vendrían de la API) -->
-            <div class="mb-3">
-              <span class="text-gray-400">Reparto: </span>
-              <span class="text-gray-200">Actores (datos para obtener con la API)</span>
-            </div>
+          <!-- Géneros -->
+          <div>
+            <span class="text-gray-400">Géneros: </span>
+            <span class="text-gray-200">
+              @for (genreId of selectedFavorite.genre_ids; track genreId) {
+                <span class="mr-1">{{ getGenreName(genreId) }},</span>
+              }
+            </span>
+          </div>
 
-            <!-- Géneros (simulados, en una implementación real vendrían de la API) -->
-            <div class="mb-3">
-              <span class="text-gray-400">Géneros: </span>
-              <span class="text-gray-200">
-                @for (genreId of selectedFavorite.genre_ids; track genreId) {
-                  <span class="mr-1">{{ getGenreName(genreId) }},</span>
-                }
-              </span>
-            </div>
-
-            <!-- Valoraciones -->
-            <div>
-              <span class="text-gray-400">Valoración: </span>
-              <span class="text-gray-200">{{ selectedFavorite.vote_average?.toFixed(1) }}/10 ({{ selectedFavorite.vote_count }} votos)</span>
-            </div>
+          <!-- Valoración -->
+          <div>
+            <span class="text-gray-400">Valoración: </span>
+            <span class="text-gray-200">{{ selectedFavorite.vote_average?.toFixed(1) }}/10 ({{ selectedFavorite.vote_count }} votos)</span>
           </div>
         </div>
 
-        <!-- Contenido similar (simular carrousel horizontal) -->
-        <div class="mt-8">
-          <h3 class="text-white text-lg font-semibold mb-3">Contenido similar</h3>
-          <div class="overflow-x-auto">
-            <div class="flex space-x-3">
-              @for (i of [1, 2, 3, 4, 5]; track i) {
-                <div class="flex-shrink-0 w-36 h-20 bg-zinc-800 rounded-md animate-pulse"></div>
-              }
-            </div>
-          </div>
+        <!-- Este título es: -->
+        <div class="mb-10">
+          <span class="text-gray-400">Este título es: </span>
+          <span class="text-gray-200">Emocionante</span>
+        </div>
+      </div>
+
+      <!-- Contenido similar -->
+      <div class="px-8 sm:px-10 md:px-12 py-6">
+        <h3 class="text-white text-xl font-semibold mb-5">Más títulos similares a este</h3>
+
+        <!-- Grid de películas similares (estilo Netflix) -->
+        <div class="grid grid-cols-3 md:grid-cols-3 lg:grid-cols-3 gap-4">
+          @if (similarContent.length > 0) {
+            @for (movie of similarContent; track movie.id) {
+              <div class="cursor-pointer group" (click)="openDetailModal(movie, $event)">
+                <!-- Imagen principal -->
+                <div class="relative aspect-video overflow-hidden rounded-md mb-2">
+                  <img
+                    [src]="'https://image.tmdb.org/t/p/w500' + movie.backdrop_path"
+                    [alt]="movie.title || movie.name"
+                    class="w-full h-full object-cover transition-all duration-300 group-hover:brightness-75"
+                    onerror="this.src='assets/images/backdrop-placeholder.jpg'"
+                  />
+
+                  <!-- Título superpuesto (opcional) -->
+                  <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                    <div class="bg-black/70 text-white px-3 py-1 rounded text-sm font-bold">Ver detalles</div>
+                  </div>
+                </div>
+
+                <!-- Metadatos -->
+                <div>
+                  <!-- Duración (simulada) -->
+                  <p class="text-gray-400 text-sm mb-1">1 h {{ 20 + (movie.id % 40) }} min</p>
+
+                  <!-- Clasificación, calidad y año -->
+                  <div class="flex items-center gap-2 mb-2">
+                    <span class="px-1 text-xs border border-gray-500 text-gray-400">{{ movie.adult ? '18+' : '16+' }}</span>
+                    <span class="px-1 text-xs border border-gray-500 text-gray-400">HD</span>
+                    <span class="text-gray-400 text-xs">{{ getYear(movie.release_date) || '2023' }}</span>
+                  </div>
+
+                  <!-- Descripción (primeras palabras) -->
+                  <p class="text-gray-300 text-sm line-clamp-3">{{ movie.overview }}</p>
+                </div>
+              </div>
+            }
+          } @else {
+            @for (i of [1, 2, 3]; track i) {
+              <div class="animate-pulse">
+                <div class="bg-zinc-800 aspect-video rounded-md mb-2"></div>
+                <div class="h-4 bg-zinc-800 rounded mb-2 w-1/3"></div>
+                <div class="h-3 bg-zinc-800 rounded mb-1 w-1/2"></div>
+                <div class="h-3 bg-zinc-800 rounded mb-1 w-1/4"></div>
+                <div class="h-3 bg-zinc-800 rounded mb-1 w-3/4"></div>
+                <div class="h-3 bg-zinc-800 rounded mb-1 w-2/3"></div>
+              </div>
+            }
+          }
         </div>
       </div>
     </div>
   </div>
-  }
+}
+</div>
