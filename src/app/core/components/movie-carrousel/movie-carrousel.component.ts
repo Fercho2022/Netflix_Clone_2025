@@ -58,14 +58,11 @@ export class MovieCarrouselComponent implements OnInit {
     this.isLoading = true; // Activar loading
     this.movieSelected.emit(movie);
 
-    // Detectar si es película o serie
-
-    let mediaType: 'movie' | 'tv' = 'movie'; // Por defecto asumimos película
+    let mediaType: 'movie' | 'tv' = 'movie';
     if (movie.name && !movie.title) {
-      mediaType = 'tv'; // Si tiene name pero no title, es una serie
+      mediaType = 'tv';
     }
 
-    // En el método que carga el trailer (por ejemplo, openMovieDetails)
     this.movieService
       .getVideoTrailer(movie.id, mediaType)
       .subscribe((trailer) => {
@@ -73,21 +70,21 @@ export class MovieCarrouselComponent implements OnInit {
           console.log(trailer);
           this.trailerUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
             `https://www.youtube-nocookie.com/embed/${trailer.key}?` +
-              `autoplay=1` + // Reproducción automática
-              `&mute=0` + // Con sonido
-              `&controls=0` + // Sin controles
-              `&disablekb=1` + // Deshabilitar teclado
+              `autoplay=0` + // Sin reproducción automática
+              `&mute=1` + // Iniciar muteado
+              `&controls=0` + // Sin controles de YouTube
+              `&disablekb=1` + // Deshabilitar controles de teclado
               `&modestbranding=1` + // Logo de YouTube discreto
-              `&iv_load_policy=3` + // Ocultar anotaciones
+              `&iv_load_policy=3` + // Sin anotaciones
               `&rel=0` + // Sin videos relacionados
               `&showinfo=0` + // Sin información del video
               `&fs=0` + // Sin botón de pantalla completa
               `&cc_load_policy=0` + // Sin subtítulos
               `&enablejsapi=1` // Habilitar API JS para control
           );
-          this.isPlaying = true; // Iniciar con estado "reproduciendo"
+          this.isPlaying = false; // Iniciar con estado "pausado"
         }
-        this.isLoading = false; // Desactivar loading cuando se complete
+        this.isLoading = false;
       });
   }
 

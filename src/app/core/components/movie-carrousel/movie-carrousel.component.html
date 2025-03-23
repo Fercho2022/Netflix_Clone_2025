@@ -125,14 +125,18 @@
               ></div>
             </div>
             } @else if (trailerUrl) {
-            <iframe
-              #modalYoutubePlayer
-              [src]="trailerUrl"
-              class="w-full h-full rounded-lg"
-              frameborder="0"
-              allowfullscreen
-            >
-            </iframe>
+            <div class="video-container">
+              <iframe
+                #modalYoutubePlayer
+                [src]="trailerUrl"
+                class="w-full h-full rounded-lg"
+                frameborder="0"
+                allowfullscreen
+              >
+              </iframe>
+              <!-- Capa para bloquear interacción -->
+              <div class="video-blocker"></div>
+            </div>
             } @else {
             <div
               class="w-full h-full bg-gray-800 rounded-lg flex items-center justify-center"

@@ -14,7 +14,7 @@ declare var google: any;
 })
 export class LoginComponent implements OnInit {
   private platformId = inject(PLATFORM_ID);
-  private router=inject(Router);
+
   private authService=inject(AuthService);
 
   ngOnInit(): void {

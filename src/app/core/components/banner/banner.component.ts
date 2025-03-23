@@ -41,34 +41,29 @@ export class BannerComponent {
 
 
   updateVideoUrl(){
-
     if (!this._videoId) {
-      // Si no hay video, puedes mostrar una imagen de fallback
-      // o mantener el video anterior
       return;
     }
-    // Obtener el origen para mitigar problemas de cookies
-  const origin = typeof window !== 'undefined' ? window.location.origin : '';
+    const origin = typeof window !== 'undefined' ? window.location.origin : '';
 
-  this.videoUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
-    `https://www.youtube-nocookie.com/embed/${this._videoId}?` +
-    `enablejsapi=1` +
-    `&controls=0` +
-    `&loop=1` +
-    `&playlist=${this._videoId}` +
-    `&modestbranding=1` +
-    `&showinfo=0` +
-    `&rel=0` +
-    `&iv_load_policy=3` +
-    `&cc_load_policy=3` +
-    `&disablekb=1` +
-    `&playsinline=1` +
-    `&autoplay=1` +
-    `&mute=1` +
-    `&cc=0` +
-    `&hl=en`
-  );
-
+    this.videoUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
+      `https://www.youtube-nocookie.com/embed/${this._videoId}?` +
+      `enablejsapi=1` +
+      `&controls=0` +
+      `&loop=1` +
+      `&playlist=${this._videoId}` +
+      `&modestbranding=1` +
+      `&showinfo=0` +
+      `&rel=0` +
+      `&iv_load_policy=3` +
+      `&cc_load_policy=3` +
+      `&disablekb=1` +
+      `&playsinline=1` +
+      `&autoplay=0` +
+      `&mute=1` +
+      `&cc=0` +
+      `&hl=en`
+    );
   }
   ngOnInit() {
     // El video se iniciará automáticamente cuando el componente se monte

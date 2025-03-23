@@ -27,3 +27,25 @@ swiper-container::part(container) {
 swiper-container::part(wrapper) {
   overflow: visible;
 }
+
+.video-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.video-container iframe {
+  position: relative;
+  z-index: 1;
+}
+
+.video-blocker {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+  background: transparent;
+  cursor: default;
+}
